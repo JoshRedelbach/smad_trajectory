@@ -17,5 +17,5 @@ The project is structure as follows:
 ### TO-DO
 
 
-# How to execute the simulation
+## How to execute the simulation
 ### TO-DO
