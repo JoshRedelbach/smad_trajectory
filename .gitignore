@@ -1,1 +1,8 @@
+*.pyc
+.DS_Store
+.env
+.venv
+__pycache__
+venv
+idea
 traj_optimization_single_old.py
