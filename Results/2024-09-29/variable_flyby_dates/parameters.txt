@@ -3,12 +3,12 @@
 ########################################### Parameters ########################################### 
 ################################################################################################## 
 
-	Type of Simulation: 					Variable Distance of Flyby - Fixed Time of Flyby
+	Type of Simulation: 				Variable Time of Flyby - Fixed Distance of Flyby
 
-	Departure Time: 						2038-02-01 00:00:00.000
-	Flyby Time: 							2039-12-01 00:00:00.000
-	Initial Distance of Flyby: 				440000.0 km
+	Departure Time: 					2038-02-01 00:00:00.000
+	Iniial Flyby Time: 					2040-12-13 00:00:00.000
+	Distance of Flyby: 					410000.0 km
 
-	Number of Iterations: 					3
+	Number of Iterations: 				50
 
-	Iteration Step Size [km]: 				10000.0 km
+	Iteration Step Size [days]: 			10.0 d

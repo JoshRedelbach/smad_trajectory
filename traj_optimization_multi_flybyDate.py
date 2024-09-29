@@ -43,8 +43,8 @@ departure_time = Time("2038-02-01", scale="tdb")        # Time of departure
 height_flyby = 410000 * u.km                            # Height of flyby wrt. surface of Jupiter
 
 # Define parameters for multi-run simulation
-number_of_iterations = 10                                # Number of iterations performed
-flyby_time = Time("2039-12-01", scale="tdb")             # Initial time of flyby at Jupiter
+number_of_iterations = 50                                # Number of iterations performed
+flyby_time = Time("2039-08-01", scale="tdb")             # Initial time of flyby at Jupiter
 iteration_step_size_day = 10 * u.day                     # Time step for iterations
 
 # ----------------------------------------------------------------------------

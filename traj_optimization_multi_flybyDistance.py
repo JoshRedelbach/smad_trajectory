@@ -40,12 +40,12 @@ import pipeline
 
 # Fixed parameters
 departure_time = Time("2038-02-01", scale="tdb")        # Time of departure
-flyby_time = Time("2039-12-01", scale="tdb")            # Initial time of flyby at Jupiter
+flyby_time = Time("2040-01-28", scale="tdb")            # Initial time of flyby at Jupiter
 
 # Define parameters for multi-run simulation
-number_of_iterations = 3                               # Number of iterations performed
-iteration_step_size_km = 10000 * u.km                      # Distance step for iterations
-initial_height_flyby = 410000 * u.km                     # Initial height of flyby wrt. surface of Jupiter
+number_of_iterations = 40                               # Number of iterations performed
+iteration_step_size_km = 500 * u.km                      # Distance step for iterations
+initial_height_flyby = 390000 * u.km                     # Initial height of flyby wrt. surface of Jupiter
 
 # ----------------------------------------------------------------------------
 
