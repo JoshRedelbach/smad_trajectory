@@ -40,12 +40,12 @@ import pipeline
 
 # Fixed parameters
 departure_time = Time("2038-02-01", scale="tdb")        # Time of departure
-flyby_time = Time("2040-01-28", scale="tdb")            # Initial time of flyby at Jupiter
+flyby_time = Time("2040-01-18", scale="tdb")            # Initial time of flyby at Jupiter
 
 # Define parameters for multi-run simulation
-number_of_iterations = 40                               # Number of iterations performed
+number_of_iterations = 80                               # Number of iterations performed
 iteration_step_size_km = 500 * u.km                      # Distance step for iterations
-initial_height_flyby = 390000 * u.km                     # Initial height of flyby wrt. surface of Jupiter
+initial_height_flyby = 380000 * u.km                     # Initial height of flyby wrt. surface of Jupiter
 
 # ----------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ print("\nSimulation started!\n")
 while iteration < number_of_iterations:
 
     # Update console
-    if (iteration+1 % 50 == 0):
+    if (iteration+1 % 10 == 0):
         print(f"Iteration\t\t\t{iteration+1} / {number_of_iterations}")
 
     # Execute pipeline

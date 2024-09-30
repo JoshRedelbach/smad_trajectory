@@ -45,7 +45,7 @@ def simulate_run(departure_time, flyby_time, height_flyby):
 
     # ---------- Propagate S/C orbit after flyby and calculate the distance to Saturn ----------
     step_size = 0.5 * u.day                # Time step for propagation
-    max_time = 4 * u.year                   # Maximum time to propagate after flyby
+    max_time = 3 * u.year                   # Maximum time to propagate after flyby
 
     current_time = flyby_time
 

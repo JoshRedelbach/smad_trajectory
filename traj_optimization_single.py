@@ -60,8 +60,8 @@ import time
 
 # Possible parameters for our mission
 departure_time = Time("2038-02-01", scale="tdb")
-flyby_time = Time("2040-02-01", scale="tdb")
-height_flyby = 410000 * u.km
+flyby_time = Time("2040-01-18", scale="tdb")
+height_flyby = 391000 * u.km
 
 
 # ----------------------------------------------------------------------------
@@ -87,12 +87,10 @@ else: print("\nSatellite does NOT cross Saturn's orbit!\n")
 
 print(f"Distance s/c to Saturn [km]:\t\t\t\t\t {distance_scToSaturn}")
 print(f"Time of closest distance of spacecraft to saturn orbit:\t\t {crossing_time}\n")
-print("\n")
-
 
 # End timer for runtime analysis
 end_time = time.time()
-print(f"\n\nSimulation finished in {end_time-start_time} seconds!\n")
+print(f"\nSimulation finished in {end_time-start_time} seconds!\n")
 
 
 
