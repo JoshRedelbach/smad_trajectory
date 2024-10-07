@@ -5,4 +5,5 @@
 __pycache__
 venv
 idea
-*_old.py
+ignore_me
+traj_env

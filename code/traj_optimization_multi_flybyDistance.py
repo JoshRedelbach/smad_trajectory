@@ -2,23 +2,18 @@
 ##############################################################################
 ########################## Trajectory Optimization ###########################
 ##############################################################################
-#################### Multiple Runs - Variable Flyby Date #####################
+################## Multiple Runs - Variable Flyby Distance ###################
 ##############################################################################
 
 # ----------------------------------------------------------------------------
 
 """
-    
 NOTE:
     - be aware of assumptions!
 
     -> assumptions:
-        - position of s/c at departure from Earth: center of Earth
-        - positions of s/c before flyby (used for Lambert problem): center of Jupiter
-        - positions of s/c after flyby (used for orbit determination/propagation): center of Jupiter
-        - the time of crossing is determined by comparing the distance of the spacecraft to the sun and the semi-major axis of the Saturn
-            -> so assumed that the s/c is in the right plane and that trajectory of spacecraft is in the orbit plane of Saturn
-
+        - For solving the lambert problem, start and end position of the spacecraft is the center of Earth and of Jupiter respectively.
+        - The flyby is assumed to be an instantaneuos maneuver, so no time pasts between arriving and leaving Jupiter.
 """
 
 # ----------------------------------------------------------------------------
@@ -40,12 +35,13 @@ import pipeline
 
 # Fixed parameters
 departure_time = Time("2038-02-01", scale="tdb")        # Time of departure
-height_flyby = 401500 * u.km                            # Height of flyby wrt. surface of Jupiter
+flyby_time = Time("2040-01-18", scale="tdb")            # Initial time of flyby at Jupiter
+entry_angle_flyby = 0.                                  # Flyby entry angle in [rad]
 
 # Define parameters for multi-run simulation
-number_of_iterations = 50                                # Number of iterations performed
-flyby_time = Time("2040-01-15", scale="tdb")             # Initial time of flyby at Jupiter
-iteration_step_size_day = 0.5 * u.day                     # Time step for iterations
+number_of_iterations = 80                               # Number of iterations performed
+iteration_step_size_km = 500 * u.km                      # Distance step for iterations
+initial_height_flyby = 380000 * u.km                     # Initial height of flyby wrt. surface of Jupiter
 
 # ----------------------------------------------------------------------------
 
@@ -62,9 +58,11 @@ delta_v_list = list()                           # Delta V
 distance_scToSaturn_crossing_list = list()      # Distance of s/c to Saturn when crossing Saturn orbit
 arrival_time_list = list()                      # Time of arrival at Saturn (when s/c crosses Saturn orbit)
 flag_saturn_crossed_list = list()               # Flag that indicates if the trajectory of the spacecraft crosses the orbit of Saturn
+flyby_entry_angle_rad_list = list()             # Flyby entry angle at Jupiter
 
 iteration = 0
 
+height_flyby = initial_height_flyby
 
 # ---------- Start iterations ----------
 print("\nSimulation started!\n")
@@ -75,20 +73,21 @@ while iteration < number_of_iterations:
         print(f"Iteration\t\t\t{iteration+1} / {number_of_iterations}")
 
     # Execute pipeline
-    delta_v, _, distance_scToSaturn, crossing_time, flag_saturn_crossed = pipeline.simulate_run(departure_time, flyby_time, height_flyby)
+    _, delta_v, _, distance_scToSaturn, crossing_time, flag_saturn_crossed, best_distance_scToSaturn_vector = pipeline.simulate_run(departure_time, flyby_time, height_flyby, entry_angle_flyby)
 
     # Collect results of current run
     departure_time_list.append(departure_time)
     flyby_time_list.append(flyby_time)
-    distance_of_flyby_list.append(height_flyby)
+    distance_of_flyby_list.append(height_flyby.value)
     delta_v_list.append(np.linalg.norm(delta_v.value))
     distance_scToSaturn_crossing_list.append(distance_scToSaturn)
     arrival_time_list.append(crossing_time)
     flag_saturn_crossed_list.append(flag_saturn_crossed)
+    flyby_entry_angle_rad_list.append(entry_angle_flyby)
 
     # Adjust flyby time for next iteration
     iteration += 1
-    flyby_time += iteration_step_size_day
+    height_flyby += iteration_step_size_km
 
 
 
@@ -97,8 +96,8 @@ fh.save_data_in_csv(departure_time_list, flyby_time_list, distance_of_flyby_list
 
 
 # ---------- Save parameters ----------
-flag_type_of_simulation = 1
-fh.save_parameters_in_txt(flag_type_of_simulation, departure_time, height_flyby, number_of_iterations, flyby_time, iteration_step_size_day)
+flag_type_of_simulation = 2
+fh.save_parameters_in_txt(flag_type_of_simulation, departure_time, flyby_time, None, None, height_flyby, number_of_iterations, iteration_step_size_km, entry_angle_flyby, None, None)
 
 # End timer for runtime analysis
 end_time = time.time()
