@@ -12,7 +12,7 @@ def save_data_in_csv(departure_time_list, flyby_time_list, distance_of_flyby_lis
     print("\n\nStarted saving results.\n")
     print("...")
 
-    path = "Results/NEW_RESULTS/data.csv"
+    path = "results/NEW_RESULTS/data.csv"
     file = open(path, 'w')
     
     # Define coloumns
@@ -52,7 +52,7 @@ def save_parameters_in_txt(flag_type_of_simulation, departure_time, flyby_time_i
     print("\n\nStarted saving parameters.\n")
     print("...")
 
-    path = "Results/NEW_RESULTS/parameters.txt"
+    path = "results/NEW_RESULTS/parameters.txt"
     file = open(path, 'w')
     
     file.write('\n################################################################################################## \n')
@@ -93,7 +93,7 @@ def save_parameters_in_txt_multi_varying(initial_departure_time, departure_time_
     print("\n\nStarted saving parameters.\n")
     print("...")
 
-    path = "Results/NEW_RESULTS/parameters.txt"
+    path = "results/NEW_RESULTS/parameters.txt"
     file = open(path, 'w')
     
     file.write('\n################################################################################################## \n')
