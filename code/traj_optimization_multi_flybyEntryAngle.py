@@ -23,26 +23,34 @@ NOTE:
 import numpy as np
 from astropy.time import Time
 from astropy import units as u
-
 import file_handling as fh
 import time
-
 import pipeline
 
 # ----------------------------------------------------------------------------
 
 """ PARAMETERS """
 
-# Fixed parameters
-departure_time = Time("2037-09-24", scale="tdb")        # Time of departure
-height_flyby = 391000 * u.km                            # Height of flyby wrt. surface of Jupiter
-flyby_time = Time("2040-01-18", scale="tdb")            # Time of flyby at Jupiter
+"""
+The following parameters need to be specified:
+    * departure_time:           Time() object of the astropy.time package
+    * flyby_time:               Time() object of the astropy.time package
+    * height_flyby:             float in [u.km]; corresponds to the closest distance of the flyby to Jupiter wrt. the surface
 
-# 0.0685
-# Define parameters for multi-run simulation
-initial_angle = 0.068                                   # Initial angle
-end_angle = 0.070                                       # End angle
-iteration_step_size_rad = 0.0001                        # Angle step for iterations in [rad]
+    * initial_angle:            float in [rad]; corresponds to the initial entry angle of the s/c at the flyby that is tested
+    * end_angle:                float in [rad]; corresponds to the end entry angle of the s/c at the flyby that is tested
+    * iteration_step_size_rad:  float in [rad]: corresponds to the angle step size
+"""
+
+# Fixed parameters
+departure_time = Time("2037-09-24", scale="tdb")
+height_flyby = 391000 * u.km
+flyby_time = Time("2040-01-18", scale="tdb")
+
+# Parameters for multi-run simulation
+initial_angle = 0.068
+end_angle = 0.070
+iteration_step_size_rad = 0.001
 
 # ----------------------------------------------------------------------------
 
@@ -89,7 +97,6 @@ while current_angle < end_angle:
     # Adjust flyby angle for next iteration
     iteration += 1
     current_angle += iteration_step_size_rad
-
 
 
 # ---------- Save data ----------

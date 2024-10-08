@@ -31,38 +31,39 @@ def simulate_run(departure_time, flyby_time, height_flyby, flyby_entry_angle=0):
     # v_inf_vec = v_sc - v_earth
     _, v_earth = earth.rv()
     v_inf_vec = v_sc_departure.to(u.km / u.s) - v_earth.to(u.km / u.s)
+
+    # Get the semi-major axis of the hyperbolic 
+    # v_inf = |v_inf_vec|
+    # v_inf = sqrt( - u / a)   =>  a = - u / (v_inf)^2
+    v_inf = np.linalg.norm(v_inf_vec).to(u.km / u.s)
+    a_orbit_escape = - Earth.k.to((u.km**3  ) / (u.s**2)) / (v_inf.to(u.km / u.s) **2)
     
+    # Energy of the orbit
+    energy_orbit_escape = - Earth.k.to((u.km**3  ) / (u.s**2)) / (2. * a_orbit_escape)
+
+    # Get the velocity we need at out LEO to escape
+    # E = (v_p^2 / 2) - (u / r_p)
+    # v_p = sqrt(2 * (E + u / r_p))
+    r_perigee_orbit_escape = Earth.R.to(u.km) + 200 * u.km
+    v_perigee_orbit_escape = np.sqrt(2. * (energy_orbit_escape + (Earth.k.to((u.km**3  ) / (u.s**2)) / r_perigee_orbit_escape)) )
+
+    # Calculate the delta v that we need to apply
+    v_leo = np.sqrt(Earth.k.to((u.km**3  ) / (u.s**2)) / r_perigee_orbit_escape)
+    delta_v_leo = v_perigee_orbit_escape - v_leo
+
+    # ---- FOR DEBUGGING ----    
     # print(f"v_sc_departure: {v_sc_departure}")
     # print(f"norm(v_sc_departure): {np.linalg.norm(v_sc_departure.to(u.km / u.s))}")
     # print(f"v_earth: {v_earth.to(u.km / u.s)}")
     # print(f"norm(v_earth): {np.linalg.norm(v_earth.to(u.km / u.s))}")
     # print(f"v_inf_vec: {v_inf_vec}")
     # print(f"norm(v_inf_vec): {np.linalg.norm(v_inf_vec.to(u.km / u.s))}")
-
-    # Get the semi-major axis of the hyperbolic 
-    # v_inf = |v_inf_vec|
-    # v_inf = sqrt( - u / a)   =>  a = - u / (v_inf)^2
-    v_inf = np.linalg.norm(v_inf_vec).to(u.km / u.s)
     # print(f"V_inf: {v_inf}")
     # print(f"Earth.k: {Earth.k}")
-    a_orbit_escape = - Earth.k.to((u.km**3  ) / (u.s**2)) / (v_inf.to(u.km / u.s) **2)
     # print(f"a_orbit_escape: {a_orbit_escape}")
-
-    # Energy of the orbit
-    energy_orbit_escape = - Earth.k.to((u.km**3  ) / (u.s**2)) / (2. * a_orbit_escape)
     # print(f"energy_orbit_escape: {energy_orbit_escape}")
-
-    # Get the velocity we need at out LEO to escape
-    # E = (v_p^2 / 2) - (u / r_p)
-    # v_p = sqrt(2 * (E + u / r_p))
-    r_perigee_orbit_escape = Earth.R.to(u.km) + 200 * u.km
     # print(f"r_perigee_orbit_escape: {r_perigee_orbit_escape}")
-    v_perigee_orbit_escape = np.sqrt(2. * (energy_orbit_escape + (Earth.k.to((u.km**3  ) / (u.s**2)) / r_perigee_orbit_escape)) )
     # print(f"v_perigee_orbit_escape: {v_perigee_orbit_escape}")
-
-    # Calculate the delta v that we need to apply
-    v_leo = np.sqrt(Earth.k.to((u.km**3  ) / (u.s**2)) / r_perigee_orbit_escape)
-    delta_v_leo = v_perigee_orbit_escape - v_leo
     # print(f"v_leo: {v_leo}")
     # print(f"\n\nDELTA-V LEO: {delta_v_leo}\n\n")
     
@@ -80,7 +81,7 @@ def simulate_run(departure_time, flyby_time, height_flyby, flyby_entry_angle=0):
 
 
     # ---------- Propagate S/C orbit after flyby and calculate the distance to Saturn ----------
-    step_size = 1. / 12. * u.day              # Time step for propagation
+    step_size = 1. / 24. * u.day              # Time step for propagation
     max_time = 3 * u.year                   # Maximum time to propagate after flyby
 
     current_time = flyby_time
@@ -123,6 +124,7 @@ def simulate_run(departure_time, flyby_time, height_flyby, flyby_entry_angle=0):
     flag_saturn_crossed = False
     if best_distance < 1e6: flag_saturn_crossed = True
 
+    # ---- FOR DEBUGGING ----
     # print(f"\nVelocity when arriving at Saturn: \t\t {post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value}\n")
     # print(f"\nVelocity when arriving at Saturn: \t\t {np.linalg.norm(post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value)}\n")
 

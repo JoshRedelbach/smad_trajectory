@@ -66,20 +66,20 @@ def save_parameters_in_txt(flag_type_of_simulation, departure_time, flyby_time_i
     elif flag_type_of_simulation == 3:
         type_of_simulation = "Variable Entry Angle of Flyby - Fixed Distance of Flyby - Fixed Time of Flyby"
 
-    file.write('\n\tType of Simulation: \t\t\t\t\t' + str(type_of_simulation))
-    file.write('\n\n\tDeparture Time: \t\t\t\t\t\t' + str(departure_time))
+    file.write('\n\tType of Simulation: \t\t\t\t\t\t' + str(type_of_simulation))
+    file.write('\n\n\tDeparture Time: \t\t\t\t\t\t\t' + str(departure_time))
 
-    file.write('\n\tFlyby Time Initial: \t\t\t\t\t\t\t' + str(flyby_time_initial))
-    file.write('\n\tFlyby Time Iterations: \t\t\t\t\t\t\t' + str(flyby_time_iterations))
-    file.write('\n\tFlyby Time Step Size [days]: \t\t\t\t\t\t\t' + str(flyby_time_step_size))
+    file.write('\n\tFlyby Time Initial: \t\t\t\t\t\t' + str(flyby_time_initial))
+    file.write('\n\tFlyby Time Iterations: \t\t\t\t\t\t' + str(flyby_time_iterations))
+    file.write('\n\tFlyby Time Step Size [days]: \t\t\t\t' + str(flyby_time_step_size))
 
-    file.write('\n\tFlyby Height Initial [km]: \t\t\t\t\t\t\t' + str(flyby_height_initial))
-    file.write('\n\tFlyby Height Iterations [km]: \t\t\t\t\t\t\t' + str(flyby_height_iterations))
-    file.write('\n\tFlyby Height Step Size [km]: \t\t\t\t\t\t\t' + str(flyby_height_step_size))
+    file.write('\n\tFlyby Height Initial [km]: \t\t\t\t\t' + str(flyby_height_initial))
+    file.write('\n\tFlyby Height Iterations [km]: \t\t\t\t' + str(flyby_height_iterations))
+    file.write('\n\tFlyby Height Step Size [km]: \t\t\t\t' + str(flyby_height_step_size))
 
-    file.write('\n\tFlyby Entry Angle Initial [rad]: \t\t\t\t\t\t\t' + str(flyby_angle_initial))
-    file.write('\n\tFlyby Entry Angle End [rad]: \t\t\t\t\t\t\t' + str(flyby_angle_end))
-    file.write('\n\tFlyby Entry Angle Step Size [rad]: \t\t\t\t\t\t\t' + str(flyby_angle_step_size))
+    file.write('\n\tFlyby Entry Angle Initial [rad]: \t\t\t' + str(flyby_angle_initial))
+    file.write('\n\tFlyby Entry Angle End [rad]: \t\t\t\t' + str(flyby_angle_end))
+    file.write('\n\tFlyby Entry Angle Step Size [rad]: \t\t\t' + str(flyby_angle_step_size))
 
     print("\nFinished saving parameters.\n")
 
@@ -104,18 +104,18 @@ def save_parameters_in_txt_multi_varying(initial_departure_time, departure_time_
 
     file.write('\n\n\tInitial Departure Time: \t\t\t\t' + str(initial_departure_time))
     file.write('\n\tDeparture Time Step Size: \t\t\t\t' + str(departure_time_stepsize))
-    file.write('\n\tDeparture Time Number of Iterations: \t\t\t\t' + str(departure_time_number_of_iterations))
+    file.write('\n\tDeparture Time Number of Iterations: \t' + str(departure_time_number_of_iterations))
 
     file.write('\n\n\tInitial Flyby Time: \t\t\t\t\t' + str(initial_flyby_time))
     file.write('\n\tFlyby Time Step Size: \t\t\t\t\t' + str(flyby_time_stepsize))
-    file.write('\n\tFlyby Time Number of Iterations: \t\t\t\t\t' + str(flyby_time_number_of_iterations))
+    file.write('\n\tFlyby Time Number of Iterations: \t\t' + str(flyby_time_number_of_iterations))
 
     file.write('\n\n\tInitial Flyby Height: \t\t\t\t\t' + str(initial_height_flyby))
-    file.write('\n\tEnd Flyby Height: \t\t\t\t\t' + str(end_height_flyby))
-    file.write('\n\tFlyby Height Step Size: \t\t\t\t\t' + str(height_flyby_stepsize))
+    file.write('\n\tEnd Flyby Height: \t\t\t\t\t\t' + str(end_height_flyby))
+    file.write('\n\tFlyby Height Step Size: \t\t\t\t' + str(height_flyby_stepsize))
 
     file.write('\n\n\tInitial Flyby Angle: \t\t\t\t\t' + str(initial_flyby_angle))
-    file.write('\n\tEnd Flyby Angle: \t\t\t\t\t' + str(end_flyby_angle))
+    file.write('\n\tEnd Flyby Angle: \t\t\t\t\t\t' + str(end_flyby_angle))
     file.write('\n\tFlyby Angle Step Size: \t\t\t\t\t' + str(flyby_angle_stepsize))
 
     print("\nFinished saving parameters.\n")

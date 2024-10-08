@@ -23,25 +23,34 @@ NOTE:
 import numpy as np
 from astropy.time import Time
 from astropy import units as u
-
 import file_handling as fh
 import time
-
 import pipeline
 
 # ----------------------------------------------------------------------------
 
 """ PARAMETERS """
 
-# Fixed parameters
-departure_time = Time("2038-02-01", scale="tdb")        # Time of departure
-flyby_time = Time("2040-01-18", scale="tdb")            # Initial time of flyby at Jupiter
-entry_angle_flyby = 0.                                  # Flyby entry angle in [rad]
+"""
+The following parameters need to be specified:
+    * departure_time:           Time() object of the astropy.time package
+    * flyby_time:               Time() object of the astropy.time package
+    * entry_angle_flyby:        float in [rad]; corresponds to the entry angle of the s/c at the flyby
 
-# Define parameters for multi-run simulation
-number_of_iterations = 80                               # Number of iterations performed
-iteration_step_size_km = 500 * u.km                      # Distance step for iterations
-initial_height_flyby = 380000 * u.km                     # Initial height of flyby wrt. surface of Jupiter
+    * initial_height_flyby:     float in [u.km]; corresponds to the initial closest flyby height of the s/c during the flyby wrt. the surface of Jupiter
+    * iteration_step_size_km:   float in [u.km]: corresponds to the height step size
+    * number_of_iterations:     integer; indicates how often the step size is added to the initial flyby height
+"""
+
+# Fixed parameters
+departure_time = Time("2038-02-01", scale="tdb")
+flyby_time = Time("2040-01-18", scale="tdb")
+entry_angle_flyby = 0.
+
+# Parameters for multi-run simulation
+initial_height_flyby = 380000 * u.km
+iteration_step_size_km = 500 * u.km
+number_of_iterations = 2
 
 # ----------------------------------------------------------------------------
 
@@ -90,9 +99,8 @@ while iteration < number_of_iterations:
     height_flyby += iteration_step_size_km
 
 
-
 # ---------- Save data ----------
-fh.save_data_in_csv(departure_time_list, flyby_time_list, distance_of_flyby_list, delta_v_list, distance_scToSaturn_crossing_list, arrival_time_list, flag_saturn_crossed_list)
+fh.save_data_in_csv(departure_time_list, flyby_time_list, distance_of_flyby_list, delta_v_list, distance_scToSaturn_crossing_list, arrival_time_list, flag_saturn_crossed_list, flyby_entry_angle_rad_list)
 
 
 # ---------- Save parameters ----------

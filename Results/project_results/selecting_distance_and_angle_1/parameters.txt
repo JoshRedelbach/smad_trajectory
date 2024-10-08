@@ -7,16 +7,16 @@ Parameters of the Iterations:
 
 	Initial Departure Time: 				2037-09-25 00:00:00.000
 	Departure Time Step Size: 				1.0 d
-	Departure Time Number of Iterations: 				1
+	Departure Time Number of Iterations: 	1
 
 	Initial Flyby Time: 					2039-07-29 00:00:00.000
 	Flyby Time Step Size: 					1.0 d
-	Flyby Time Number of Iterations: 					1
+	Flyby Time Number of Iterations: 		1
 
 	Initial Flyby Height: 					1160000
-	End Flyby Height: 					1190000
-	Flyby Height Step Size: 					500
+	End Flyby Height: 						1190000
+	Flyby Height Step Size: 				500
 
 	Initial Flyby Angle: 					0.04
-	End Flyby Angle: 					0.14
+	End Flyby Angle: 						0.14
 	Flyby Angle Step Size: 					0.001

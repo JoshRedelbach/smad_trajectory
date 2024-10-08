@@ -23,36 +23,53 @@ NOTE:
 import numpy as np
 from astropy.time import Time
 from astropy import units as u
-
 import file_handling as fh
 import time
-
 import pipeline
 
 # ----------------------------------------------------------------------------
 
 """ PARAMETERS """
 
+"""
+The following parameters need to be specified:
+    * departure_time_initial:               Time() object of the astropy.time package; initial time of departure that is tested
+    * departure_time_stepsize:              float in [u.day]: corresponds to the time step size
+    * departure_time_number_of_iterations:  integer; indicates how often the step size is added to the initial departure date
+
+    * flyby_time_initial:                   Time() object of the astropy.time package; initial date of flyby that is tested
+    * flyby_time_stepsize:                  float in [u.day]: corresponds to the time step size
+    * flyby_time_number_of_iterations:      integer; indicates how often the step size is added to the initial flyby date
+
+    * flyby_height_initial:                 float in [km]; corresponds to the initial closest flyby height of the s/c during the flyby wrt. the surface of Jupiter that is tested
+    * flyby_height_end:                     float in [km]; corresponds to the last closest flyby height of the s/c during the flyby wrt. the surface of Jupiter that is tested
+    * flyby_height_stepsize:                float in [km]; indicates the step size that is added to the initial flyby height
+    
+    * flyby_angle_initial:                  float in [rad]; corresponds to the initial entry angle of the flyby that is tested
+    * flyby_angle_end:                      float in [rad]; corresponds to the last entry angle of the flyby that is tested
+    * flyby_angle_stepsize:                 float in [rad]; indicates the step size that is added to the initial flyby entry angle
+"""
+
 # Departure date
-departure_time_initial = Time("2037-09-25", scale="tdb")    # Time of departure
-departure_time_stepsize = 1.0 * u.day                       # Step size of iterations over departure time
-departure_time_number_of_iterations = 1                    # Number of iterations the departure_time_stepsize is added to flyby_time_initial
+departure_time_initial = Time("2037-09-25", scale="tdb")
+departure_time_stepsize = 1.0 * u.day
+departure_time_number_of_iterations = 1
 
 # Flyby date
-flyby_time_initial = Time("2039-07-29", scale="tdb")        # Initial time of flyby that is tested (included)
-flyby_time_stepsize = 1.0 * u.day                           # Step size of iterations over flyby time
-flyby_time_number_of_iterations = 1                         # Number of iterations the flyby_time_stepsize is added to flyby_time_initial
+flyby_time_initial = Time("2039-07-29", scale="tdb")
+flyby_time_stepsize = 1.0 * u.day
+flyby_time_number_of_iterations = 1
 
 # Flyby distance
-# !! Minimum flyby distance to the center of Jupiter 643.428km from the center of the Jupiter (radius of Jupiter 69.911km) !!
-flyby_height_initial = 1159000                               # Height of flyby wrt. surface of Jupiter [km](included)
-flyby_height_end = 1161000                                   # Height of flyby wrt. surface of Jupiter [km](included)
-flyby_height_stepsize = 100                               # Step size of iterations over flyby distance [km]
+# !! Minimum flyby distance to the center of Jupiter 643 428 km from the center of the Jupiter due to radiation (radius of Jupiter 69.911km) !!
+flyby_height_initial = 1161000
+flyby_height_end = 1161100
+flyby_height_stepsize = 100
 
 # Flyby entry angle
-flyby_angle_initial = 0.102                                   # Angle of flyby [rad] (included)
-flyby_angle_end = 0.104                                       # Angle of flyby [rad] (included)
-flyby_angle_stepsize = 0.00005                                 # Step size of iterations over flyby angle [rad]
+flyby_angle_initial = 0.1
+flyby_angle_end = 0.2
+flyby_angle_stepsize = 0.1
 
 # ----------------------------------------------------------------------------
 

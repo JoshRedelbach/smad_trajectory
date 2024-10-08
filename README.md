@@ -24,11 +24,11 @@ Based on the initial velocity and the velocity of the Earth with respect to the 
 
 Based on the velocity with which the spacecraft arrives at Jupiter, a given entry angle of the flyby and a given closest distance of the spacecraft to Jupiter during the flyby, the velocity is calculated with which the spacecraft is leaving Jupiter. For solving this, another algorihtm of the `poliastro` package is used whose documentation can be found [here](https://docs.poliastro.space/en/stable/autoapi/poliastro/core/flybys/index.html#poliastro.core.flybys.compute_flyby). Again, the patched-conic method is used, so only the influence of Jupiter is considered. 
 
-Based on the obtained velocity of the spacecraft with respect to the sun, the new orbit after the flyby is propagated for 3 years starting from an approximated position of the spacecraft at the center of the Jupiter. For this task, the implemented propagator of the `poliastro` package is used, which is based on the work of [Farnocchi (2013)](/references/Robust%20resolution%20of%20Kepler’s%20equation%20in%20all%20eccentricity%20regimes%20(Farnocchi,%202013).pdf). The documentation can be found [here](https://docs.poliastro.space/en/stable/autoapi/poliastro/twobody/propagation/index.html). During the entire propagation the distance of the spacecraft to the Saturn is calculated every second hour. The minimum distance and the respective time stamp is saved. If the minimum distance of the spacecraft to Saturn is less than 100 000 km (requirement given by the professor), we consider our trajectory as successfull.
+Based on the obtained velocity of the spacecraft with respect to the sun, the new orbit after the flyby is propagated for 3 years starting from an approximated position of the spacecraft at the center of the Jupiter. For this task, the implemented propagator of the `poliastro` package is used, which is based on the work of [Farnocchi (2013)](/references/Robust%20resolution%20of%20Kepler’s%20equation%20in%20all%20eccentricity%20regimes%20(Farnocchi,%202013).pdf). The documentation can be found [here](https://docs.poliastro.space/en/stable/autoapi/poliastro/twobody/propagation/index.html). During the entire propagation the distance of the spacecraft to the Saturn is calculated every hour. The minimum distance and the respective time stamp is saved. If the minimum distance of the spacecraft to Saturn is less than 100 000 km (requirement given by the professor), we consider our trajectory as successfull.
 
 So in summary, the following assumptions are used:
   - For solving the lambert problem, start and end position of the spacecraft is the center of Earth and of Jupiter respectively.
-  - The flyby is assumed to be an instantaneuos maneuver, so no time pasts between arriving and leaving Jupiter.
+  - The flyby is assumed to be an instantaneous maneuver, so no time pasts between arriving and leaving Jupiter.
 
 
 ## Structure of the Project
@@ -49,7 +49,7 @@ All of the mentioned executable simulations are based on the following two `pyth
 * [`pipeline.py`](/code/pipeline.py): This file contains the pipeline of a single run. This pipeline gets called during the single run simulation as well as during the multi run simulation.
 * [`file_handling.py`](/code/file_handling.py): This file contains the functions for saving the results and the used parameters of the multi run simulations.
 
-**IMPORTANT**: The runtime of each run can last multiple seconds (executed on a MacBook Pro with a M1 chip: ~ 10-15s). So running the multi-run simulations, make sure that the range of the parameters is not to large. Otherwise, the simulation will take a very long time.
+**IMPORTANT**: The runtime of each run can last multiple seconds (executed on a MacBook Pro with a M1 chip: ~ 20-30s). So running the multi-run simulations, make sure that the range of the parameters is not to large. Otherwise, the simulation will take a very long time.
 
 ## How to Setup the Simulation
 This simulation is only based on `Python`. Thus, to be able to setup the simulation make sure that you have installed a working Python interpreter and the `pip` python package manager.
@@ -106,8 +106,10 @@ This resulted in the following parameters:
 
 * date of departure: 2037-09-25
 * date of flyby: 2039-07-29
+* date of arrival at Saturn: 2041-09-14
 * height of flyby: 1 159 500 km
 * entry angle of flyby: -0.10265 rad ~ 5,8814 deg
+* required delta-v: 6.848 km/s
 
 These parameters are already assigned in the single run simulation. So to get insights of this final trajectory, the file [`traj_optimization_single.py`](/code/traj_optimization_single.py) can be executed and details are printed to the console and the 2D plot of the involved orbits is created.
 

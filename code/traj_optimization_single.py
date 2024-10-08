@@ -28,36 +28,38 @@ from poliastro.twobody import Orbit
 from poliastro.plotting.static import StaticOrbitPlotter
 from poliastro.ephem import Ephem
 import matplotlib.pyplot as plt
-
 import pipeline
-
 import time
-
 
 # ----------------------------------------------------------------------------
 
-
 """ PARAMETERS """
 
-""" 
-TO-DO:
-    - EXPLAIN ALL PARAMETERS IN THE BEGINNING 
+"""
+The following parameters need to be specified:
+    * departure_time:   Time() object of the astropy.time package
+    * flyby_time:       Time() object of the astropy.time package
+    * height_flyby:     float in [km] but has to be multiplied by u.km (astropy.units); corresponds to the closest distance of the flyby to Jupiter wrt. the surface
+    * flyby_angle:      float in [rad]; corresponds to the entry angle of the s/c at the flyby of Jupiter 
 """
 
-# Define time of departure and flyby maneuver
-# departure_time = Time("2030-01-01", scale="tdb")
-# flyby_time = Time("2032-01-01", scale="tdb")
-# height_flyby = 500000 * u.km                   # height of flyby wrt. surface of Jupiter
+# Template
+# departure_time = Time("YYYY-MM-DD", scale="tdb")
+# flyby_time = Time("YYYY-MM-DD", scale="tdb")
+# height_flyby = XX * u.km
+# flyby_angle = XX
 
-# Voyager 2 parameters
-# departure_time = Time("1977-08-20", scale="tdb")
-# flyby_time = Time("1979-07-09", scale="tdb")
-# height_flyby = 570000 * u.km
-
-# Voyager 1 parameters
+# Voyager 1 parameters (unknown entry angle)
 # departure_time = Time("1977-09-05", scale="tdb")
 # flyby_time = Time("1979-03-05", scale="tdb")
 # height_flyby = 349000 * u.km
+# flyby_angle = 0.
+
+# Voyager 2 parameters (unknown entry angle)
+# departure_time = Time("1977-08-20", scale="tdb")
+# flyby_time = Time("1979-07-09", scale="tdb")
+# height_flyby = 570000 * u.km
+# flyby_angle = 0.
 
 # Possible parameters for our mission
 # departure_time = Time("2038-02-01", scale="tdb")
@@ -65,20 +67,13 @@ TO-DO:
 # height_flyby = 391000 * u.km
 # flyby_angle = 0.06860000000000004
 
-# Possible parameters for our mission
-# departure_time = Time("2038-02-01", scale="tdb")
-# flyby_time = Time("2040-01-18", scale="tdb")
-# height_flyby = 570000 * u.km
-
-# Possible parameters for our mission
+# Selected parameters for the project mission
 departure_time = Time("2037-09-25", scale="tdb")
 flyby_time = Time("2039-07-29", scale="tdb")
 height_flyby = 1159500 * u.km
 flyby_angle = -0.10265
 
-
 # ----------------------------------------------------------------------------
-
 
 """ CODE """
 
@@ -90,15 +85,15 @@ start_time = time.time()
 v_sc_departure, delta_v_leo, v_sc_flybyDeparture, distance_scToSaturn, crossing_time, flag_saturn_crossed, distance_scToSaturn_vector = pipeline.simulate_run(departure_time, flyby_time, height_flyby, flyby_angle)
 
 
-
 # ---------- Print results to console ----------
 
-print(f"\nSpeed of s/c required at departure [km/s]:\t\t\t {np.linalg.norm(v_sc_departure.value)}\n")
+print(f"\nSpeed of s/c required at Earth [km/s]:\t\t\t\t {np.linalg.norm(v_sc_departure.value)}")
+print(f"Delta-V that needs to be applied [km/s]:\t\t\t {delta_v_leo.value}")
 
-if flag_saturn_crossed: print("\nSatellite crosses Saturn's orbit!\n")    
-else: print("\nSatellite does NOT cross Saturn's orbit!\n")
+if flag_saturn_crossed: print("\nSatellite meets Saturn!\n")    
+else: print("\nSatellite does NOT meet Saturn!\n")
 
-print(f"Distance s/c to Saturn [km]:\t\t\t\t\t {distance_scToSaturn}")
+print(f"Closest distance s/c to Saturn [km]:\t\t\t\t {distance_scToSaturn}")
 print(f"Distance vector s/c to Saturn [km]:\t\t\t\t {distance_scToSaturn_vector}")
 print(f"Distance vector s/c to Saturn [normalized]:\t\t\t {distance_scToSaturn_vector / distance_scToSaturn}")
 print(f"Time of closest distance of spacecraft to saturn orbit:\t\t {crossing_time}\n")
@@ -106,7 +101,6 @@ print(f"Time of closest distance of spacecraft to saturn orbit:\t\t {crossing_ti
 # End timer for runtime analysis
 end_time = time.time()
 print(f"\nSimulation finished in {end_time-start_time} seconds!\n")
-
 
 
 # ---------- Plots ----------
