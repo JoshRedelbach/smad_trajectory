@@ -119,6 +119,15 @@ initial_orbit = Orbit.from_vectors(Sun, earth.r, v_sc_departure, epoch=departure
 
 post_flyby_orbit = Orbit.from_vectors(Sun, jupiter.r, v_sc_flybyDeparture, epoch=flyby_time)
 
+# Orbit after flyby
+# print(f"\n\nSemi major axis: {post_flyby_orbit.a}")
+# print(f"Inclination: {post_flyby_orbit.inc}")
+# print(f"Eccentricity: {post_flyby_orbit.ecc}")
+# print(f"RAAN: {post_flyby_orbit.raan}")
+# print(f"True anomaly: {post_flyby_orbit.nu}")
+# print(f"Argument of Perigee: {post_flyby_orbit.argp}")
+
+
 # Create figure
 fig, ax = plt.subplots(figsize=(10, 10))
 plotter = StaticOrbitPlotter(ax)

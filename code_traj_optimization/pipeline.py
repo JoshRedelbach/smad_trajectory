@@ -125,7 +125,7 @@ def simulate_run(departure_time, flyby_time, height_flyby, flyby_entry_angle=0):
     if best_distance < 1e6: flag_saturn_crossed = True
 
     # ---- FOR DEBUGGING ----
-    # print(f"\nVelocity when arriving at Saturn: \t\t {post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value}\n")
-    # print(f"\nVelocity when arriving at Saturn: \t\t {np.linalg.norm(post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value)}\n")
+    print(f"\nVelocity when arriving at Saturn: \t\t {post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value}\n")
+    print(f"\nVelocity when arriving at Saturn: \t\t {np.linalg.norm(post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value)}\n")
 
     return v_sc_departure, delta_v_leo, v_sc_flybyDeparture, best_distance, crossing_time, flag_saturn_crossed, best_distance_vector
