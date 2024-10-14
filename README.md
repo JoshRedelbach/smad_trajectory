@@ -1,10 +1,15 @@
 # Interplanetary Trajectory Optimization with Python
 
-This simulation should help to find and analyze the optimal trajectory of a spacecraft to Saturn with respect to required delta-v and duration of the flight.
-During the flight to Saturn, the spacecraft will perform a flyby maneuver at Jupiter.
+This project includes simulations on designing and optimizing ...
+* ... an interplanetary trajectory to Saturn performing a flyby at Jupiter,
+* ... the entry trajectory when arriving at Saturn,
+* ... the transfer trajectory from the entry trajectory to the final working orbit,
+* ... the exit trajectory after successfully achieving the mission's objectives,
+* ... the propulsion system.
+
 
 ## Development Details
-  - Name: _Interplanetary Trajectory Optimization performing a Flyby_
+  - Name: _Interplanetary Trajectory Optimization performing Flybys_
   - Current version number: 1.4.0
   - Date of initial coding: 2024-09-25
   - Date of first release (verison 1.0.0): 2024-09-29
@@ -14,9 +19,19 @@ During the flight to Saturn, the spacecraft will perform a flyby maneuver at Jup
   - The algorithms used in this project are indicated in the section _Idea_
   - A detailed description of each simulation that can be executed is given in the section _Structure of the Project_
 
+## Parts
+This project contains three different simulations:
+1. Finding an interplanetary trajectory to Saturn.
+2. Finding an entry, transfer and exit trajectory at Saturn.
+3. Estimating the required mass of the propellant.
+
+For details on the simulations of Part 1, please continue reading this README.md file. It presents the idea, the structure, how to setup and execute the project as well as the results regarding the final interplanetary trajectory.
+
+Part 2 and Part 3 are presented in the form of Jupyter notebooks and can be found in the folders [code_saturn_entry](/code_saturn_entry/) and [code_mass_calculations](/code_mass_calculations/) respectively. As the notebooks contain comments and explainations for the entire simulation, no details on the idea behind the simulation is given in this README.md file. Furthermore, all notebooks are executed and the results are uploaded as well, it is not needed to run the notebooks locally. Both folders include two different notebooks, as two different concepts for the exit trajectory are developed. Therefore, the required $\Delta v$ changes and thus the mass calculations need to be adapted accordingly. The two notebooks for calculating the mass have the exact same structure, but just different values inserted corresponding to the different exit trajectories. The notebooks of Part 3 can be locally executed as soon as a working Python interpreter is installed. In order to locally execute the notebooks of Part 2, the same requirements as for Part 1 are required which are introduced later in this README.md file.
+
 
 ## Idea
-This simulation was developed for the course _Space Mission Analysis and Design_ of the _Instituo Tecnico Superior_ of Lisbon, Portugal. The task was to design a interplanetary space mission. The spacecraft should depart from a Low Earth Orbit with an altitude of 200 km with the goal of reaching Saturn. An optimal trajectory should be found with respect to required delta-v and duration of the flight. Based on previous space missions, e.g. Voyager 1 and 2, it was decided to use a gravity-assist flyby around Jupiter.
+This simulation was developed for the course _Space Mission Analysis and Design_ of the _Instituo Tecnico Superior_ of Lisbon, Portugal. The task was to design a interplanetary space mission. The spacecraft should depart from a Low Earth Orbit with an altitude of 200 km with the goal of reaching Saturn in a desired working orbit. An optimal trajectory should be found with respect to required delta-v and duration of the flight. Based on previous space missions, e.g. Voyager 1 and 2, it was decided to use a gravity-assist flyby around Jupiter.
 
 The problem was simplified as following. The Lambert problem is solved for the a given time of departure and a given time of flyby at Jupiter. For those dates the positions of the center of Earth and Jupiter are used for the initial and end position of the spacecraft respectively as input for the Lambert problem. For solving the Lambert problem the implemented solver in the package `poliastro` is used whose documentation can be found [here](https://docs.poliastro.space/en/stable/autoapi/poliastro/iod/izzo/index.html#poliastro.iod.izzo.lambert). The algorithm is based on the paper of [Izzo (2014)](/references/Revisiting%20Lambert's%20Problem%20(Izzo,%202014).pdf). It assumes that the spacecraft is only in the gravitational influence of the Sun (patched-conic approach). This algorithm outputs the required initial velocity at Earth and the velocity with which the spacecraft arrives at Jupiter, both with respect to the sun.
 

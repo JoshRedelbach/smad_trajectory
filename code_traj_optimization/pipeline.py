@@ -124,8 +124,20 @@ def simulate_run(departure_time, flyby_time, height_flyby, flyby_entry_angle=0):
     flag_saturn_crossed = False
     if best_distance < 1e6: flag_saturn_crossed = True
 
-    # ---- FOR DEBUGGING ----
-    print(f"\nVelocity when arriving at Saturn: \t\t {post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value}\n")
-    print(f"\nVelocity when arriving at Saturn: \t\t {np.linalg.norm(post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s).value)}\n")
+    # Determining the arrival velocity of s/c wrt. Sun and Saturn
+    saturn_ephem = Ephem.from_body(Saturn, crossing_time)                                    
+    saturn = Orbit.from_ephem(Sun, saturn_ephem, crossing_time)
+    vel_saturn_arrival_wrt_sun_vec = saturn.v.to(u.km / u.s) 
+
+    vel_sc_arrival_wrt_sun_vec = post_flyby_orbit.propagate(crossing_time).v.to(u.km / u.s)
+    vel_sc_arrival_wrt_sun_norm = np.linalg.norm(vel_sc_arrival_wrt_sun_vec)
+
+    vel_sc_arrival_wrt_saturn_vec = vel_sc_arrival_wrt_sun_vec - vel_saturn_arrival_wrt_sun_vec
+    vel_sc_arrival_wrt_saturn_norm = np.linalg.norm(vel_sc_arrival_wrt_saturn_vec)
+
+    print(f"\nVelocity when arriving at Saturn wrt. Sun: \t\t\t {vel_sc_arrival_wrt_sun_vec}")
+    print(f"Speed when arriving at Saturn wrt. Sun: \t\t\t {vel_sc_arrival_wrt_sun_norm}")
+    print(f"Velocity when arriving at Saturn wrt. Saturn: \t\t\t {vel_sc_arrival_wrt_saturn_vec}")
+    print(f"Speed when arriving at Saturn wrt. Saturn: \t\t\t {vel_sc_arrival_wrt_saturn_norm}\n")
 
     return v_sc_departure, delta_v_leo, v_sc_flybyDeparture, best_distance, crossing_time, flag_saturn_crossed, best_distance_vector
