@@ -10,7 +10,7 @@ This project includes simulations on designing and optimizing ...
 
 ## Development Details
   - Name: _Interplanetary Trajectory Optimization performing Flybys_
-  - Current version number: 1.4.0
+  - Current version number: 2.0.0
   - Date of initial coding: 2024-09-25
   - Date of first release (verison 1.0.0): 2024-09-29
   - Name of author: Joshua Redelbach, contact: <joshua.redelbach@t-online.de>
